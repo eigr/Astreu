@@ -33,36 +33,9 @@ defmodule Astreu.TopicManager do
   end
 
   @impl true
-  def handle_call(:subscribe, _from, [value | state]) do
-    {:reply, value, state}
-  end
-
-  @impl true
-  def handle_cast({:unsubscribe, _value}, state) do
-    {:noreply, state}
-  end
-
-  @impl true
   def handle_cast({:drop, _value}, state) do
     {:noreply, state}
   end
 
-  @impl true
-  def handle_cast({:publish, value}, state) do
-    {:noreply, state ++ [value]}
-  end
-
-  @impl true
-  def handle_cast({:ack, value}, state) do
-    {:noreply, state ++ [value]}
-  end
-
-  @impl true
-  def handle_cast({:reply_to, value}, state) do
-    {:noreply, state ++ [value]}
-  end
-
   # TODO Define client API
-
-
 end

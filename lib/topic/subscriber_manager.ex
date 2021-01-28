@@ -2,6 +2,8 @@ defmodule Astreu.SubscriberManager do
   use GenServer
   require Logger
 
+  @registry Astreu.TopicsRegistry
+
   @doc """
   GenServer.init/1 callback
   """
@@ -13,7 +15,7 @@ defmodule Astreu.SubscriberManager do
   def child_spec(state) do
     %{
       id: state.subscriber,
-      start: {__MODULE__, :start_link, [state]},
+      start: {__MODULE__, :start_link, [state]}
     }
   end
 
@@ -45,7 +47,6 @@ defmodule Astreu.SubscriberManager do
   # TODO Define client API
 
   defp via_tuple(subscriber_id) do
-    {:via, Registry, {:topics, subscriber_id}}
+    {:via, Horde.Registry, {@registry, subscriber_id}}
   end
-
 end

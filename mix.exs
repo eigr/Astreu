@@ -16,6 +16,7 @@ defmodule Astreu.MixProject do
     [
       extra_applications: [
         :logger,
+        :observer,
         :phoenix_pubsub
       ],
       mod: {Astreu.Application, []}
@@ -25,6 +26,8 @@ defmodule Astreu.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
+      {:horde, "~> 0.8.3"},
+      {:libcluster, "~> 3.2.1"},
       {:google_protos, "~> 0.1.0"},
       {:grpc, github: "elixir-grpc/grpc"},
       {:cowlib, "~> 2.9.0", override: true},
