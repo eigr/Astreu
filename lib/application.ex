@@ -5,9 +5,9 @@ defmodule Astreu.Application do
   @impl true
   def start(_type, _args) do
     children = [
-      # {GRPC.Server.Supervisor, {Image.Storage.Endpoint, @port}}
       # {Phoenix.PubSub.PG2, name: Astreu.PubSub},
-      {Phoenix.PubSub, name: Astreu.PubSub}
+      {Phoenix.PubSub, name: Astreu.PubSub},
+      {GRPC.Server.Supervisor, {Astreu.Endpoint, 9980}}
     ]
 
     opts = [strategy: :one_for_one, name: Astreu.Supervisor]
