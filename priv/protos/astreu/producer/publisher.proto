@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "io.astreu";
+option java_outer_classname = "ProtocolProto";
+
+package astreu.producer;
+
+import "protocol/protocol.proto";
+
+service Publisher {
+    rpc Publish(stream astreu.protocol.Message) returns (stream astreu.protocol.AckMessage) {}
+}
+ 
