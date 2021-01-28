@@ -1,4 +1,4 @@
-defmodule Astreu.TopicManager do
+defmodule Astreu.SubscriberManager do
   use GenServer
   require Logger
 
@@ -10,16 +10,16 @@ defmodule Astreu.TopicManager do
     {:ok, state}
   end
 
-  def child_spec() do
+  def child_spec(state) do
     %{
-      id: Astreu.TopicManager,
-      start: {Astreu.TopicManager, :start_link, []}
+      id: state.subscriber,
+      start: {__MODULE__, :start_link, [state]},
     }
   end
 
   def start_link(state \\ []) do
     Logger.info("Starting Topic Manager...")
-    GenServer.start_link(__MODULE__, state, name: __MODULE__)
+    GenServer.start_link(__MODULE__, state, name: via_tuple(state.subscriber))
   end
 
   @impl true
@@ -64,5 +64,8 @@ defmodule Astreu.TopicManager do
 
   # TODO Define client API
 
+  defp via_tuple(subscriber_id) do
+    {:via, Registry, {:topics, subscriber_id}}
+  end
 
 end
