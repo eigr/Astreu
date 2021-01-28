@@ -20,7 +20,7 @@ defmodule Astreu.SubscriberManager do
   end
 
   def start_link(state \\ []) do
-    Logger.info("Starting Topic Manager...")
+    Logger.info("Starting Subscriber Manager...")
     GenServer.start_link(__MODULE__, state, name: via_tuple(state.subscriber))
   end
 
