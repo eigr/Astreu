@@ -23,16 +23,6 @@ defmodule Astreu.SubscriberManager do
   end
 
   @impl true
-  def handle_call(:info, _from, [value | state]) do
-    {:reply, value, state}
-  end
-
-  @impl true
-  def handle_call(:create, _from, [value | state]) do
-    {:reply, value, state}
-  end
-
-  @impl true
   def handle_call(:subscribe, _from, [value | state]) do
     {:reply, value, state}
   end
@@ -40,16 +30,6 @@ defmodule Astreu.SubscriberManager do
   @impl true
   def handle_cast({:unsubscribe, _value}, state) do
     {:noreply, state}
-  end
-
-  @impl true
-  def handle_cast({:drop, _value}, state) do
-    {:noreply, state}
-  end
-
-  @impl true
-  def handle_cast({:publish, value}, state) do
-    {:noreply, state ++ [value]}
   end
 
   @impl true
