@@ -49,7 +49,7 @@ defmodule Astreu.Supervisor do
   defp cluster_supervisor() do
     topologies = Application.get_env(:libcluster, :topologies)
 
-    if topologies && Code.ensure_compiled?(Cluster.Supervisor) do
+    if topologies && Code.ensure_compiled(Cluster.Supervisor) do
       {Cluster.Supervisor, [topologies, [name: Astreu.ClusterSupervisor]]}
     end
   end
