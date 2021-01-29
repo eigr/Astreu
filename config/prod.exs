@@ -18,7 +18,7 @@ config :logger, :console,
 config :libcluster,
   debug: false,
   topologies: [
-    astreu_cluster: [
+    prod: [
       strategy: Cluster.Strategy.Gossip,
     ]
   ]

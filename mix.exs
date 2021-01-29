@@ -5,9 +5,10 @@ defmodule Astreu.MixProject do
     [
       app: :astreu,
       version: "0.1.0",
-      elixir: "~> 1.11-dev",
+      elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      releases: releases(),
     ]
   end
 
@@ -34,4 +35,13 @@ defmodule Astreu.MixProject do
       {:phoenix_pubsub, "~> 2.0"}
     ]
   end
-end
+
+  defp releases() do
+    [
+      astreu: [
+        include_executables_for: [:unix],
+        applications: [runtime_tools: :permanent]
+      ]
+    ]
+  end
+ end
