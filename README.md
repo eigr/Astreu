@@ -1,6 +1,6 @@
 # Astreu
 
-**High-performance Messaging System basead on gRPC protocol**
+**High-performance Messaging System based on gRPC protocol**
 
 ## Installation
 
