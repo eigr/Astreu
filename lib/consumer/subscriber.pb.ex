@@ -19,8 +19,8 @@ defmodule Astreu.Consumer.Options.PropertiesEntry do
     )
   end
 
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
+  field :key, 1, type: :string
+  field :value, 2, type: :string
 end
 
 defmodule Astreu.Consumer.Options do
@@ -52,9 +52,9 @@ defmodule Astreu.Consumer.Options do
     )
   end
 
-  field(:topic, 1, type: :string)
-  field(:subscriberId, 2, type: :string)
-  field(:properties, 3, repeated: true, type: Astreu.Consumer.Options.PropertiesEntry, map: true)
+  field :topic, 1, type: :string
+  field :subscriberId, 2, type: :string
+  field :properties, 3, repeated: true, type: Astreu.Consumer.Options.PropertiesEntry, map: true
 end
 
 defmodule Astreu.Consumer.Info do
@@ -62,10 +62,10 @@ defmodule Astreu.Consumer.Info do
   use Protobuf, syntax: :proto3
 
   @type t :: %__MODULE__{
-          info: {atom, any}
+          request: {atom, any}
         }
 
-  defstruct [:info]
+  defstruct [:request]
 
   def descriptor do
     # credo:disable-for-next-line
@@ -76,13 +76,13 @@ defmodule Astreu.Consumer.Info do
         115, 18, 61, 10, 10, 65, 99, 107, 77, 101, 115, 115, 97, 103, 101, 24, 2, 32, 1, 40, 11,
         50, 27, 46, 97, 115, 116, 114, 101, 117, 46, 112, 114, 111, 116, 111, 99, 111, 108, 46,
         65, 99, 107, 77, 101, 115, 115, 97, 103, 101, 72, 0, 82, 10, 65, 99, 107, 77, 101, 115,
-        115, 97, 103, 101, 66, 6, 10, 4, 105, 110, 102, 111>>
+        115, 97, 103, 101, 66, 9, 10, 7, 114, 101, 113, 117, 101, 115, 116>>
     )
   end
 
-  oneof(:info, 0)
-  field(:options, 1, type: Astreu.Consumer.Options, oneof: 0)
-  field(:AckMessage, 2, type: Astreu.Protocol.AckMessage, oneof: 0)
+  oneof :request, 0
+  field :options, 1, type: Astreu.Consumer.Options, oneof: 0
+  field :AckMessage, 2, type: Astreu.Protocol.AckMessage, oneof: 0
 end
 
 defmodule Astreu.Consumer.Subscriber.Service do
@@ -99,13 +99,13 @@ defmodule Astreu.Consumer.Subscriber.Service do
         40, 1, 48, 1, 18, 69, 10, 11, 85, 110, 115, 117, 98, 115, 99, 114, 105, 98, 101, 18, 21,
         46, 97, 115, 116, 114, 101, 117, 46, 99, 111, 110, 115, 117, 109, 101, 114, 46, 73, 110,
         102, 111, 26, 22, 46, 103, 111, 111, 103, 108, 101, 46, 112, 114, 111, 116, 111, 98, 117,
-        102, 46, 69, 109, 112, 116, 121, 34, 3, 136, 2, 0, 40, 1, 48, 0>>
+        102, 46, 69, 109, 112, 116, 121, 34, 3, 136, 2, 0, 40, 0, 48, 0>>
     )
   end
 
-  rpc(:Subscribe, stream(Astreu.Consumer.Info), stream(Astreu.Protocol.Message))
+  rpc :Subscribe, stream(Astreu.Consumer.Info), stream(Astreu.Protocol.Message)
 
-  rpc(:Unsubscribe, stream(Astreu.Consumer.Info), Google.Protobuf.Empty)
+  rpc :Unsubscribe, Astreu.Consumer.Info, Google.Protobuf.Empty
 end
 
 defmodule Astreu.Consumer.Subscriber.Stub do

@@ -16,7 +16,7 @@ defmodule Astreu.Manager.Topic do
     )
   end
 
-  field(:name, 1, type: :string)
+  field :name, 1, type: :string
 end
 
 defmodule Astreu.Manager.TopicInfo.PropertiesEntry do
@@ -40,8 +40,8 @@ defmodule Astreu.Manager.TopicInfo.PropertiesEntry do
     )
   end
 
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
+  field :key, 1, type: :string
+  field :value, 2, type: :string
 end
 
 defmodule Astreu.Manager.TopicInfo do
@@ -76,10 +76,10 @@ defmodule Astreu.Manager.TopicInfo do
     )
   end
 
-  field(:id, 1, type: :string)
-  field(:size, 2, type: :uint64)
-  field(:properties, 3, repeated: true, type: Astreu.Manager.TopicInfo.PropertiesEntry, map: true)
-  field(:createdAt, 4, type: Google.Protobuf.Timestamp)
+  field :id, 1, type: :string
+  field :size, 2, type: :uint64
+  field :properties, 3, repeated: true, type: Astreu.Manager.TopicInfo.PropertiesEntry, map: true
+  field :createdAt, 4, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Manager.TopicService.Service do
@@ -103,11 +103,11 @@ defmodule Astreu.Manager.TopicService.Service do
     )
   end
 
-  rpc(:Info, Astreu.Manager.Topic, Astreu.Manager.TopicInfo)
+  rpc :Info, Astreu.Manager.Topic, Astreu.Manager.TopicInfo
 
-  rpc(:Drop, Astreu.Manager.Topic, Google.Protobuf.Empty)
+  rpc :Drop, Astreu.Manager.Topic, Google.Protobuf.Empty
 
-  rpc(:Create, Astreu.Manager.Topic, Astreu.Manager.TopicInfo)
+  rpc :Create, Astreu.Manager.Topic, Astreu.Manager.TopicInfo
 end
 
 defmodule Astreu.Manager.TopicService.Stub do

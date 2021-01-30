@@ -16,7 +16,7 @@ message Options {
 }
 
 message Info {
-    oneof info {
+    oneof request {
         Options options = 1;
         astreu.protocol.AckMessage AckMessage = 2;
     }
@@ -24,6 +24,6 @@ message Info {
 
 service Subscriber {
     rpc Subscribe(stream Info) returns (stream astreu.protocol.Message) {}
-    rpc Unsubscribe(stream Info) returns (google.protobuf.Empty) {}
+    rpc Unsubscribe(Info) returns (google.protobuf.Empty) {}
 }
  

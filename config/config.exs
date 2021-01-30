@@ -14,6 +14,8 @@ config :logger, :console,
   format: "$date $time [$node]:[$metadata]:[$level]:$levelpad$message\n",
   metadata: [:pid]
 
+config :grpc, start_server: true
+
 # Cluster configurations
 config :libcluster,
   debug: false,

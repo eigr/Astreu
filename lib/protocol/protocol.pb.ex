@@ -19,8 +19,8 @@ defmodule Astreu.Protocol.MetaData.PropertiesEntry do
     )
   end
 
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
+  field :key, 1, type: :string
+  field :value, 2, type: :string
 end
 
 defmodule Astreu.Protocol.MetaData do
@@ -56,10 +56,10 @@ defmodule Astreu.Protocol.MetaData do
     )
   end
 
-  field(:replyTo, 1, type: :string)
-  field(:correlationId, 2, type: :string)
-  field(:properties, 3, repeated: true, type: Astreu.Protocol.MetaData.PropertiesEntry, map: true)
-  field(:timestamp, 4, type: Google.Protobuf.Timestamp)
+  field :replyTo, 1, type: :string
+  field :correlationId, 2, type: :string
+  field :properties, 3, repeated: true, type: Astreu.Protocol.MetaData.PropertiesEntry, map: true
+  field :timestamp, 4, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Protocol.Message do
@@ -88,10 +88,10 @@ defmodule Astreu.Protocol.Message do
     )
   end
 
-  field(:id, 1, type: :string)
-  field(:topic, 2, type: :string)
-  field(:data, 3, type: Google.Protobuf.Any)
-  field(:metadata, 4, type: Astreu.Protocol.MetaData)
+  field :id, 1, type: :string
+  field :topic, 2, type: :string
+  field :data, 3, type: Google.Protobuf.Any
+  field :metadata, 4, type: Astreu.Protocol.MetaData
 end
 
 defmodule Astreu.Protocol.AckMessage do
@@ -117,7 +117,7 @@ defmodule Astreu.Protocol.AckMessage do
     )
   end
 
-  oneof(:response, 0)
-  field(:metadata, 1, type: Astreu.Protocol.MetaData, oneof: 0)
-  field(:data, 2, type: Astreu.Protocol.Message, oneof: 0)
+  oneof :response, 0
+  field :metadata, 1, type: Astreu.Protocol.MetaData, oneof: 0
+  field :data, 2, type: Astreu.Protocol.Message, oneof: 0
 end
