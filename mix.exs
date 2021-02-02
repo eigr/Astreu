@@ -8,7 +8,7 @@ defmodule Astreu.MixProject do
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      releases: releases(),
+      releases: releases()
     ]
   end
 
@@ -44,4 +44,4 @@ defmodule Astreu.MixProject do
       ]
     ]
   end
- end
+end
