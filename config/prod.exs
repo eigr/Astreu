@@ -21,6 +21,6 @@ config :libcluster,
   debug: false,
   topologies: [
     prod: [
-      strategy: Cluster.Strategy.Gossip,
+      strategy: Cluster.Strategy.Gossip
     ]
   ]

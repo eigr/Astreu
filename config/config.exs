@@ -21,6 +21,8 @@ config :libcluster,
   debug: false,
   topologies: [
     astreu_cluster: [
-      strategy: Cluster.Strategy.Gossip,
+      strategy: Cluster.Strategy.Gossip
     ]
   ]
+
+config :astreu, producer_adapter: Astreu.Producer.PubSubTransientAdapter
