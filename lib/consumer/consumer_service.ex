@@ -12,7 +12,6 @@ defmodule Astreu.Consumer.Service do
       Logger.info("Decode request from #{inspect(info)}")
       Server.send_reply(stream, Astreu.Protocol.Message.new())
     end)
-
   end
 
   @spec unsubscribe(Astreu.Consumer.Info.t(), GRPC.Server.Stream.t()) ::

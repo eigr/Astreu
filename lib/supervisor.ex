@@ -5,6 +5,7 @@ defmodule Astreu.Supervisor do
 
   @registry Astreu.TopicsRegistry
   @subscribers_supervisor Astreu.SubscriberSupervisor
+  @pubsub Application.get_env(:astreu, :producer_adapter)
 
   def start_link(args) do
     Supervisor.start_link(__MODULE__, args, name: __MODULE__)
@@ -13,8 +14,8 @@ defmodule Astreu.Supervisor do
   def init(_args) do
     children =
       [
-        {GRPC.Server.Supervisor, {Astreu.Endpoint, 9980}},
         cluster_supervisor(),
+        Astreu.Producer.Dispatcher.child_spec([]),
         {Horde.Registry, [name: @registry, keys: :unique]},
         {Horde.DynamicSupervisor, [name: @subscribers_supervisor, strategy: :one_for_one]},
         %{
@@ -38,8 +39,8 @@ defmodule Astreu.Supervisor do
           }
         },
         Astreu.NodeListener,
-        # {Phoenix.PubSub.PG2, name: Astreu.PubSub},
-        {Phoenix.PubSub, name: Astreu.PubSub}
+        @pubsub.init([]),
+        {GRPC.Server.Supervisor, {Astreu.Endpoint, 9980}}
       ]
       |> Enum.reject(&is_nil/1)
 

@@ -19,8 +19,8 @@ defmodule Astreu.Consumer.Options.PropertiesEntry do
     )
   end
 
-  field :key, 1, type: :string
-  field :value, 2, type: :string
+  field(:key, 1, type: :string)
+  field(:value, 2, type: :string)
 end
 
 defmodule Astreu.Consumer.Options do
@@ -52,9 +52,9 @@ defmodule Astreu.Consumer.Options do
     )
   end
 
-  field :topic, 1, type: :string
-  field :subscriberId, 2, type: :string
-  field :properties, 3, repeated: true, type: Astreu.Consumer.Options.PropertiesEntry, map: true
+  field(:topic, 1, type: :string)
+  field(:subscriberId, 2, type: :string)
+  field(:properties, 3, repeated: true, type: Astreu.Consumer.Options.PropertiesEntry, map: true)
 end
 
 defmodule Astreu.Consumer.Info do
@@ -80,9 +80,9 @@ defmodule Astreu.Consumer.Info do
     )
   end
 
-  oneof :request, 0
-  field :options, 1, type: Astreu.Consumer.Options, oneof: 0
-  field :AckMessage, 2, type: Astreu.Protocol.AckMessage, oneof: 0
+  oneof(:request, 0)
+  field(:options, 1, type: Astreu.Consumer.Options, oneof: 0)
+  field(:AckMessage, 2, type: Astreu.Protocol.AckMessage, oneof: 0)
 end
 
 defmodule Astreu.Consumer.Subscriber.Service do
@@ -103,9 +103,9 @@ defmodule Astreu.Consumer.Subscriber.Service do
     )
   end
 
-  rpc :Subscribe, stream(Astreu.Consumer.Info), stream(Astreu.Protocol.Message)
+  rpc(:Subscribe, stream(Astreu.Consumer.Info), stream(Astreu.Protocol.Message))
 
-  rpc :Unsubscribe, Astreu.Consumer.Info, Google.Protobuf.Empty
+  rpc(:Unsubscribe, Astreu.Consumer.Info, Google.Protobuf.Empty)
 end
 
 defmodule Astreu.Consumer.Subscriber.Stub do
