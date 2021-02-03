@@ -3,20 +3,20 @@ defmodule Astreu.Consumer.Service do
   require Logger
   alias GRPC.Server
 
-  @spec subscribe(Astreu.Protocol.Payload.t(), GRPC.Server.Stream.t()) ::
+  @spec subscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
           Astreu.Protocol.Message.t()
-  def subscribe(info_stream, stream) do
-    Logger.debug("Received request #{inspect(info_stream)}")
+  def subscribe(message_stream, stream) do
+    Logger.debug("Received request #{inspect(message_stream)}")
 
-    Enum.each(info_stream, fn info ->
-      Logger.info("Decode request from #{inspect(info)}")
-      Server.send_reply(stream, Astreu.Protocol.Message.new())
+    Enum.each(message_stream, fn message ->
+      Logger.info("Decode request from #{inspect(message)}")
+      Server.send_reply(stream, Astreu.Protocol.message().new())
     end)
   end
 
-  @spec unsubscribe(Astreu.Protocol.Payload.t(), GRPC.Server.Stream.t()) ::
+  @spec unsubscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
           Google.Protobuf.Empty.t()
-  def unsubscribe(info, _stream) do
-    Logger.debug("Received request #{inspect(info)}")
+  def unsubscribe(message, _stream) do
+    Logger.debug("Received request #{inspect(message)}")
   end
 end
