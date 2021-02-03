@@ -1,19 +1,19 @@
 defmodule Astreu.Protocol.Failure.Type do
   @moduledoc false
   use Protobuf, enum: true, syntax: :proto3
-  @type t :: integer | :FATAL | :TRANSIENT
+  @type t :: integer | :TRANSIENT | :FATAL
 
   def descriptor do
     # credo:disable-for-next-line
     Elixir.Google.Protobuf.EnumDescriptorProto.decode(
-      <<10, 4, 84, 121, 112, 101, 18, 9, 10, 5, 70, 65, 84, 65, 76, 16, 0, 18, 13, 10, 9, 84, 82,
-        65, 78, 83, 73, 69, 78, 84, 16, 1>>
+      <<10, 4, 84, 121, 112, 101, 18, 13, 10, 9, 84, 82, 65, 78, 83, 73, 69, 78, 84, 16, 0, 18, 9,
+        10, 5, 70, 65, 84, 65, 76, 16, 1>>
     )
   end
 
-  field(:FATAL, 0)
+  field(:TRANSIENT, 0)
 
-  field(:TRANSIENT, 1)
+  field(:FATAL, 1)
 end
 
 defmodule Astreu.Protocol.Ack.Reason do
@@ -185,8 +185,8 @@ defmodule Astreu.Protocol.Failure do
         116, 105, 109, 101, 115, 116, 97, 109, 112, 24, 4, 32, 1, 40, 11, 50, 26, 46, 103, 111,
         111, 103, 108, 101, 46, 112, 114, 111, 116, 111, 98, 117, 102, 46, 84, 105, 109, 101, 115,
         116, 97, 109, 112, 82, 9, 116, 105, 109, 101, 115, 116, 97, 109, 112, 34, 32, 10, 4, 84,
-        121, 112, 101, 18, 9, 10, 5, 70, 65, 84, 65, 76, 16, 0, 18, 13, 10, 9, 84, 82, 65, 78, 83,
-        73, 69, 78, 84, 16, 1>>
+        121, 112, 101, 18, 13, 10, 9, 84, 82, 65, 78, 83, 73, 69, 78, 84, 16, 0, 18, 9, 10, 5, 70,
+        65, 84, 65, 76, 16, 1>>
     )
   end
 
@@ -263,31 +263,6 @@ defmodule Astreu.Protocol.Connect do
   field(:timestamp, 5, type: Google.Protobuf.Timestamp)
 end
 
-defmodule Astreu.Protocol.Disconnect.PropertiesEntry do
-  @moduledoc false
-  use Protobuf, map: true, syntax: :proto3
-
-  @type t :: %__MODULE__{
-          key: String.t(),
-          value: String.t()
-        }
-
-  defstruct [:key, :value]
-
-  def descriptor do
-    # credo:disable-for-next-line
-    Elixir.Google.Protobuf.DescriptorProto.decode(
-      <<10, 15, 80, 114, 111, 112, 101, 114, 116, 105, 101, 115, 69, 110, 116, 114, 121, 18, 16,
-        10, 3, 107, 101, 121, 24, 1, 32, 1, 40, 9, 82, 3, 107, 101, 121, 18, 20, 10, 5, 118, 97,
-        108, 117, 101, 24, 2, 32, 1, 40, 9, 82, 5, 118, 97, 108, 117, 101, 58, 8, 8, 0, 16, 0, 24,
-        0, 56, 1>>
-    )
-  end
-
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
-end
-
 defmodule Astreu.Protocol.Disconnect do
   @moduledoc false
   use Protobuf, syntax: :proto3
@@ -296,11 +271,10 @@ defmodule Astreu.Protocol.Disconnect do
           uuid: String.t(),
           topic: String.t(),
           subscription: String.t(),
-          properties: %{String.t() => String.t()},
           timestamp: Google.Protobuf.Timestamp.t() | nil
         }
 
-  defstruct [:uuid, :topic, :subscription, :properties, :timestamp]
+  defstruct [:uuid, :topic, :subscription, :timestamp]
 
   def descriptor do
     # credo:disable-for-next-line
@@ -309,31 +283,17 @@ defmodule Astreu.Protocol.Disconnect do
         24, 1, 32, 1, 40, 9, 82, 4, 117, 117, 105, 100, 18, 20, 10, 5, 116, 111, 112, 105, 99, 24,
         2, 32, 1, 40, 9, 82, 5, 116, 111, 112, 105, 99, 18, 34, 10, 12, 115, 117, 98, 115, 99,
         114, 105, 112, 116, 105, 111, 110, 24, 3, 32, 1, 40, 9, 82, 12, 115, 117, 98, 115, 99,
-        114, 105, 112, 116, 105, 111, 110, 18, 75, 10, 10, 112, 114, 111, 112, 101, 114, 116, 105,
-        101, 115, 24, 4, 32, 3, 40, 11, 50, 43, 46, 97, 115, 116, 114, 101, 117, 46, 112, 114,
-        111, 116, 111, 99, 111, 108, 46, 68, 105, 115, 99, 111, 110, 110, 101, 99, 116, 46, 80,
-        114, 111, 112, 101, 114, 116, 105, 101, 115, 69, 110, 116, 114, 121, 82, 10, 112, 114,
-        111, 112, 101, 114, 116, 105, 101, 115, 18, 56, 10, 9, 116, 105, 109, 101, 115, 116, 97,
-        109, 112, 24, 5, 32, 1, 40, 11, 50, 26, 46, 103, 111, 111, 103, 108, 101, 46, 112, 114,
-        111, 116, 111, 98, 117, 102, 46, 84, 105, 109, 101, 115, 116, 97, 109, 112, 82, 9, 116,
-        105, 109, 101, 115, 116, 97, 109, 112, 26, 67, 10, 15, 80, 114, 111, 112, 101, 114, 116,
-        105, 101, 115, 69, 110, 116, 114, 121, 18, 16, 10, 3, 107, 101, 121, 24, 1, 32, 1, 40, 9,
-        82, 3, 107, 101, 121, 18, 20, 10, 5, 118, 97, 108, 117, 101, 24, 2, 32, 1, 40, 9, 82, 5,
-        118, 97, 108, 117, 101, 58, 8, 8, 0, 16, 0, 24, 0, 56, 1>>
+        114, 105, 112, 116, 105, 111, 110, 18, 56, 10, 9, 116, 105, 109, 101, 115, 116, 97, 109,
+        112, 24, 4, 32, 1, 40, 11, 50, 26, 46, 103, 111, 111, 103, 108, 101, 46, 112, 114, 111,
+        116, 111, 98, 117, 102, 46, 84, 105, 109, 101, 115, 116, 97, 109, 112, 82, 9, 116, 105,
+        109, 101, 115, 116, 97, 109, 112>>
     )
   end
 
   field(:uuid, 1, type: :string)
   field(:topic, 2, type: :string)
   field(:subscription, 3, type: :string)
-
-  field(:properties, 4,
-    repeated: true,
-    type: Astreu.Protocol.Disconnect.PropertiesEntry,
-    map: true
-  )
-
-  field(:timestamp, 5, type: Google.Protobuf.Timestamp)
+  field(:timestamp, 4, type: Google.Protobuf.Timestamp)
 end
 
 defmodule Astreu.Protocol.System do
