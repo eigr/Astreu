@@ -11,6 +11,7 @@ defmodule Astreu.SubscriberManager do
   """
   @impl true
   def init(state) do
+    Process.flag(:trap_exit, true)
     {:ok, state}
   end
 
@@ -66,14 +67,26 @@ defmodule Astreu.SubscriberManager do
     {:noreply, state ++ [value]}
   end
 
+  def terminate(reason, state) do
+    Logger.info("terminating")
+    cleanup(reason, state)
+    state
+  end
+
   # TODO Define client API
   def subscribe(subscriber) do
     GenServer.call(via_tuple(subscriber), :subscribe)
   end
+
+  # internals
 
   defp via_tuple(subscriber_id) do
     {:via, Horde.Registry, {@registry, subscriber_id}}
   end
 
   defp get_subscriber(state), do: "#{state.topic}:#{state.subscriber}"
+
+  defp cleanup(reason, state) do
+    # TODO implement Cleanup here
+  end
 end

@@ -16,17 +16,56 @@ message MetaData {
   google.protobuf.Timestamp timestamp = 4;
 }
 
-message Message {
-  string id = 1;
-  string topic = 2;
-  google.protobuf.Any data = 3;
-  MetaData metadata = 4;
+message Info {
+  string uuid = 1;
+  map<string, string> properties = 3;
+  google.protobuf.Timestamp timestamp = 4;
 }
 
-message AckMessage {
-  oneof response {
-    MetaData metadata = 1;
-    Message data = 2;
+message Connect {
+  string id = 1;
+  string topic = 2;
+  map<string, string> properties = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+message Disconnect {
+  string id = 1;
+  string topic = 2;
+  map<string, string> properties = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+message System {
+  oneof data {
+    Info info = 1;
+    Connect connect = 2;
+    Disconnect disconnect = 3;
   }
 }
 
+message Message {
+  MetaData metadata = 1;
+  google.protobuf.Any data = 2;
+}
+
+message Ack {
+  enum Reason {
+    ACCEPT = 0;
+    REJECT = 1;
+    KNOWLEDGE = 2;
+  }
+
+  string uuid = 1;
+  Reason reason = 2;
+  MetaData metadata = 3;
+  string subscription = 4;
+}
+
+message Payload {
+  oneof data {
+    System system = 1;
+    Message message = 2;
+    Ack ack = 3;
+  }
+}
