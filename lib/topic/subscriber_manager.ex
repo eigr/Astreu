@@ -68,7 +68,6 @@ defmodule Astreu.SubscriberManager do
   end
 
   def terminate(reason, state) do
-    Logger.info("terminating")
     cleanup(reason, state)
     state
   end
@@ -88,5 +87,7 @@ defmodule Astreu.SubscriberManager do
 
   defp cleanup(reason, state) do
     # TODO implement Cleanup here
+    pid = self()
+    Logger.info("Terminating subscription process #{inspect(pid)}. Reason #{inspect(reason)}")
   end
 end
