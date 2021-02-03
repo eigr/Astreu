@@ -10,7 +10,7 @@ import "protocol/protocol.proto";
 import "google/protobuf/empty.proto";
 
 service Subscriber {
-    rpc Subscribe(stream astreu.protocol.Payload) returns (stream astreu.protocol.Message) {}
+    rpc Subscribe(stream astreu.protocol.Payload) returns (stream astreu.protocol.Payload) {}
     rpc Unsubscribe(astreu.protocol.Payload) returns (google.protobuf.Empty) {}
 }
  

@@ -4,19 +4,19 @@ defmodule Astreu.Consumer.Service do
   alias GRPC.Server
 
   @spec subscribe(Astreu.Protocol.Payload.t(), GRPC.Server.Stream.t()) ::
-          Astreu.Protocol.Message.t()
-  def subscribe(info_stream, stream) do
-    Logger.debug("Received request #{inspect(info_stream)}")
+          Astreu.Protocol.Payload.t()
+  def subscribe(payload_stream, stream) do
+    Logger.debug("Received request #{inspect(payload_stream)}")
 
-    Enum.each(info_stream, fn info ->
-      Logger.info("Decode request from #{inspect(info)}")
-      Server.send_reply(stream, Astreu.Protocol.Message.new())
+    Enum.each(payload_stream, fn payload ->
+      Logger.info("Decode request from #{inspect(payload)}")
+      Server.send_reply(stream, Astreu.Protocol.Payload.new())
     end)
   end
 
   @spec unsubscribe(Astreu.Protocol.Payload.t(), GRPC.Server.Stream.t()) ::
           Google.Protobuf.Empty.t()
-  def unsubscribe(info, _stream) do
-    Logger.debug("Received request #{inspect(info)}")
+  def unsubscribe(payload, _stream) do
+    Logger.debug("Received request #{inspect(payload)}")
   end
 end
