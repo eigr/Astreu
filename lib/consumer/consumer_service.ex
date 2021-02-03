@@ -10,7 +10,7 @@ defmodule Astreu.Consumer.Service do
 
     Enum.each(message_stream, fn message ->
       Logger.info("Decode request from #{inspect(message)}")
-      Server.send_reply(stream, Astreu.Protocol.message().new())
+      Server.send_reply(stream, Astreu.Protocol.Message.new(data: {:exchange,  Astreu.Protocol.Exchange.new()}))
     end)
   end
 

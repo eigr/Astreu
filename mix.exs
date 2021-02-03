@@ -32,7 +32,8 @@ defmodule Astreu.MixProject do
       {:google_protos, "~> 0.1.0"},
       {:grpc, github: "elixir-grpc/grpc"},
       {:cowlib, "~> 2.9.0", override: true},
-      {:phoenix_pubsub, "~> 2.0"}
+      {:phoenix_pubsub, "~> 2.0"},
+      {:uuid, "~> 1.1"}
     ]
   end
 
