@@ -11,7 +11,7 @@ import "google/protobuf/timestamp.proto";
 
 message MetaData {
   string replyTo = 1;
-  string correlationId = 2;
+  string correlation = 2;
   map<string, string> properties = 3;
   google.protobuf.Timestamp timestamp = 4;
 }
@@ -19,6 +19,17 @@ message MetaData {
 message Info {
   string uuid = 1;
   map<string, string> properties = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+message Failure {
+  enum Type {
+    FATAL = 0;
+    TRANSIENT = 1;
+  }
+  string id = 1;
+  string correlation = 2;
+  string description = 3;
   google.protobuf.Timestamp timestamp = 4;
 }
 
@@ -39,8 +50,9 @@ message Disconnect {
 message System {
   oneof data {
     Info info = 1;
-    Connect connect = 2;
-    Disconnect disconnect = 3;
+    Failure failure = 2;
+    Connect connect = 3;
+    Disconnect disconnect = 4;
   }
 }
 
