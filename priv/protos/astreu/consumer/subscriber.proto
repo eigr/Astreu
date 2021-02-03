@@ -9,21 +9,8 @@ package astreu.consumer;
 import "protocol/protocol.proto";
 import "google/protobuf/empty.proto";
 
-message Options {
-    string topic = 1;
-    string subscriberId = 2;
-    map<string, string> properties = 3;
-}
-
-message Info {
-    oneof request {
-        Options options = 1;
-        astreu.protocol.AckMessage AckMessage = 2;
-    }
-}
-
 service Subscriber {
-    rpc Subscribe(stream Info) returns (stream astreu.protocol.Message) {}
-    rpc Unsubscribe(Info) returns (google.protobuf.Empty) {}
+    rpc Subscribe(stream astreu.protocol.Payload) returns (stream astreu.protocol.Message) {}
+    rpc Unsubscribe(astreu.protocol.Payload) returns (google.protobuf.Empty) {}
 }
  
