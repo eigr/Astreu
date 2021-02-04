@@ -16,6 +16,8 @@ config :logger, :console,
 
 config :grpc, start_server: true
 
+config :prometheus, GRPCPrometheus.ServerInterceptor, latency: :histogram
+
 # Cluster configurations
 config :libcluster,
   debug: false,
