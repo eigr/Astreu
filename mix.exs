@@ -30,8 +30,14 @@ defmodule Astreu.MixProject do
       {:horde, "~> 0.8.3"},
       {:libcluster, "~> 3.2.1"},
       {:google_protos, "~> 0.1.0"},
-      {:grpc, github: "elixir-grpc/grpc"},
+      {:grpc, github: "elixir-grpc/grpc", override: true},
+      {:grpc_prometheus, "~> 0.1.0"},
+      {:prometheus, "~> 4.6"},
+      {:prometheus_plugs, "~> 1.1"},
+      {:plug_cowboy, "~> 2.3"},
       {:cowlib, "~> 2.9.0", override: true},
+      {:poison, "~> 4.0"},
+      {:httpoison, "~> 1.6"},
       {:phoenix_pubsub, "~> 2.0"},
       {:uuid, "~> 1.1"}
     ]
