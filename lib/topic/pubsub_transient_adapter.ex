@@ -1,5 +1,5 @@
 defmodule Astreu.Producer.PubSubTransientAdapter do
-  @behaviour Astreu.Producer.Adapter
+  @behaviour Astreu.Producer.PubSubAdapter
 
   alias Phoenix.PubSub
 

@@ -3,7 +3,6 @@ defmodule Astreu.Supervisor do
   use Supervisor
   require Logger
 
-  @http_port 9100
   @registry Astreu.TopicsRegistry
   @subscribers_supervisor Astreu.SubscriberSupervisor
   @pubsub Application.get_env(:astreu, :producer_adapter)
@@ -15,11 +14,6 @@ defmodule Astreu.Supervisor do
   def init(_args) do
     children =
       [
-        Plug.Cowboy.child_spec(
-          scheme: :http,
-          plug: Astreu.Http.Endpoint,
-          options: [port: @http_port]
-        ),
         cluster_supervisor(),
         Astreu.Producer.Dispatcher.child_spec([]),
         {Horde.Registry, [name: @registry, keys: :unique]},
@@ -46,6 +40,7 @@ defmodule Astreu.Supervisor do
         },
         Astreu.NodeListener,
         @pubsub.init([]),
+        Astreu.HTTP.PlugBootstrap.setup(),
         {GRPC.Server.Supervisor, {Astreu.Endpoint, 9980}}
       ]
       |> Enum.reject(&is_nil/1)

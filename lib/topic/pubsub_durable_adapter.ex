@@ -1,5 +1,5 @@
 defmodule Astreu.Producer.PubSubDurableAdapter do
-  @behaviour Astreu.Producer.Adapter
+  @behaviour Astreu.Producer.PubSubAdapter
 
   @imple true
   def init(_options) do
