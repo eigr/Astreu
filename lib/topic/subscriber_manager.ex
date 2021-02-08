@@ -43,7 +43,7 @@ defmodule Astreu.SubscriberManager do
       "Receive message #{inspect(message)}, Forward to subscriber #{inspect(state.subscriber)}"
     )
 
-    # state.stream |> Server.send_reply(message)
+    state.stream |> Server.send_reply(message)
     {:noreply, state}
   end
 
@@ -78,7 +78,6 @@ defmodule Astreu.SubscriberManager do
   end
 
   # internals
-
   defp via_tuple(subscriber_id) do
     {:via, Horde.Registry, {@registry, subscriber_id}}
   end
