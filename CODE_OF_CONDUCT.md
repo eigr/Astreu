@@ -43,6 +43,8 @@ that are not aligned to this Code of Conduct, or to ban temporarily or
 permanently any contributor for other behaviors that they deem inappropriate,
 threatening, offensive, or harmful.
 
+It is the project maintainers responsibility to respond to all contributors as quickly as possible, in a thoughtful manner and with a view to promoting a healthy environment among all.
+
 ## Scope
 
 This Code of Conduct applies both within project spaces and in public spaces
