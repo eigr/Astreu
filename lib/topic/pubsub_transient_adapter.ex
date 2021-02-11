@@ -3,11 +3,11 @@ defmodule Astreu.Producer.PubSubTransientAdapter do
 
   alias Phoenix.PubSub
 
-  @imple true
+  @impl Astreu.Producer.PubSubAdapter
   def init(_options) do
     {Phoenix.PubSub, name: Astreu.PubSub}
   end
 
-  @imple true
+  @impl Astreu.Producer.PubSubAdapter
   def publish(topic, message), do: PubSub.broadcast(Astreu.PubSub, topic, {:enqueue, message})
 end
