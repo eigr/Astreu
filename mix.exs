@@ -8,7 +8,10 @@ defmodule Astreu.MixProject do
       elixir: "~> 1.10",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      releases: releases()
+      releases: releases(),
+      aliases: [
+        test: "test --no-start"
+      ]
     ]
   end
 
@@ -36,10 +39,12 @@ defmodule Astreu.MixProject do
       {:prometheus_plugs, "~> 1.1"},
       {:plug_cowboy, "~> 2.3"},
       {:cowlib, "~> 2.9.0", override: true},
+      {:jason, "~> 1.2"},
       {:poison, "~> 4.0"},
       {:httpoison, "~> 1.6"},
       {:phoenix_pubsub, "~> 2.0"},
-      {:uuid, "~> 1.1"}
+      {:uuid, "~> 1.1"},
+      {:local_cluster, "~> 1.2", only: [:test]}
     ]
   end
 
