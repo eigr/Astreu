@@ -18,22 +18,19 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+    
     - name: Set up Elixir
       uses: actions/setup-elixir@v1
       with:
         elixir-version: ${{matrix.elixir}} # Define the elixir version [required]
         otp-version: ${{matrix.otp}} # Define the OTP version [required]
         experimental-otp: true
-    #- name: Restore dependencies cache
-    #  uses: actions/cache@v2
-    #  with:
-    #    path: deps
-    #    key: ${{ runner.os }}-mix-${{ hashFiles('**/mix.lock') }}
-    #    restore-keys: ${{ runner.os }}-mix-
+
     - name: Install dependencies
       run: |
         mix deps.clean --all
         mix deps.get
+
     - name: Check format
       run: mix format --check-formatted
     - name: Run tests
