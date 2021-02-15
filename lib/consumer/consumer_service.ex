@@ -1,7 +1,7 @@
 defmodule Astreu.Consumer.Service do
   use GRPC.Server, service: Astreu.Consumer.Subscriber.Service
   require Logger
-  alias Astreu.ProtocolBehaviour
+  alias Astreu.ProtocolBehaviour, as: Protocol
 
   @spec subscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
           Astreu.Protocol.Message.t()
@@ -23,16 +23,16 @@ defmodule Astreu.Consumer.Service do
   defp handle_message(stream, message) do
     params = %{message: message, consumer: true, producer: false}
 
-    with {:ok, message} <- ProtocolBehaviour.ensure_metadata(params) do
-      case message.data do
-        {:system, _} -> ProtocolBehaviour.handle_system(stream, message.data)
-        {:exchange, _} -> ProtocolBehaviour.handle_exchange(stream, message.data)
-        {:ack, _} -> ProtocolBehaviour.handle_ack(stream, message.data)
-        _ -> ProtocolBehaviour.handle_invalid(stream, message.data)
+    with {:ok, msg} <- Protocol.ensure_metadata(params) do
+      case msg.data do
+        {:system, _} -> Protocol.handle_system(stream, msg.data)
+        {:exchange, _} -> Protocol.handle_exchange(stream, msg.data)
+        {:ack, _} -> Protocol.handle_ack(stream, msg.data)
+        _ -> Protocol.handle_invalid(stream, msg.data)
       end
     else
       {:error, reason} ->
-        ProtocolBehaviour.handle_invalid(stream, message.data, reason)
+        Protocol.handle_invalid(stream, message.data, reason)
     end
   end
 end
