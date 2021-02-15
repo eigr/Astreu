@@ -5,7 +5,7 @@ defmodule Astreu.ProtocolBehaviour do
 
   @spec ensure_metadata(Astreu.Protocol.Message.t()) ::
           {:ok, Astreu.Protocol.Message.t()} | {:error, String.t()}
-  def ensure_metadata(message) do
+  def ensure_metadata(%{message: message, consumer: consumer, producer: producer} = params) do
     case message.data do
       {:system, _} -> ensure_system(message)
       {:exchange, _} -> ensure_exchange(message)

@@ -21,7 +21,9 @@ defmodule Astreu.Consumer.Service do
   end
 
   defp handle_message(stream, message) do
-    with {:ok, message} <- ProtocolBehaviour.ensure_metadata(message) do
+    params = %{message: message, consumer: true, producer: false}
+
+    with {:ok, message} <- ProtocolBehaviour.ensure_metadata(params) do
       case message.data do
         {:system, _} -> ProtocolBehaviour.handle_system(stream, message.data)
         {:exchange, _} -> ProtocolBehaviour.handle_exchange(stream, message.data)
