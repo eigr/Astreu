@@ -85,8 +85,8 @@ defmodule Astreu.SubscriberManager do
   defp get_subscriber(state), do: "#{state.topic}:#{state.subscriber}"
 
   defp cleanup(reason, state) do
-    # TODO implement Cleanup here
     pid = self()
     Logger.info("Terminating subscription process #{inspect(pid)}. Reason #{inspect(reason)}")
+    PubSub.unsubscribe(Astreu.PubSub, state.topic)
   end
 end

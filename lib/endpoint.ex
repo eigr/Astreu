@@ -3,6 +3,7 @@ defmodule Astreu.Endpoint do
 
   intercept(GRPC.Logger.Server)
   intercept(GRPCPrometheus.ServerInterceptor)
+  intercept(Astreu.Http.AuthenticationInterceptor)
 
   services = [
     Astreu.Manager.Service,
