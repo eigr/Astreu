@@ -21,10 +21,11 @@ import "google/protobuf/timestamp.proto";
  *     timestamp:   The timestamp of the creation of this message. (Required). 
  **/
 message Metadata {
-  string replyTo = 1;
-  string correlation = 2;
-  map<string, string> properties = 3;
-  google.protobuf.Timestamp timestamp = 4;
+  string topic = 1;
+  string producerId = 2;
+  string correlation = 3;
+  map<string, string> properties = 4;
+  google.protobuf.Timestamp timestamp = 5;
 }
 
 /*

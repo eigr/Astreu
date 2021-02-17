@@ -27,7 +27,7 @@ defmodule Astreu.Producer.Dispatcher do
     {:noreply, state}
   end
 
-  def dispatch(message) do
-    GenServer.cast(__MODULE__, {:publish, message.topic, message})
+  def dispatch(topic, message) do
+    GenServer.cast(__MODULE__, {:publish, topic, message})
   end
 end
