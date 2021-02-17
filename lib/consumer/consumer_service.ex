@@ -3,6 +3,12 @@ defmodule Astreu.Consumer.Service do
   require Logger
   alias Astreu.ProtocolBehaviour, as: Protocol
 
+  @spec unsubscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
+          Google.Protobuf.Empty.t()
+  def unsubscribe(message, _stream) do
+    Logger.debug("Received request #{inspect(message)}")
+  end
+
   @spec subscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
           Astreu.Protocol.Message.t()
   def subscribe(message_stream, stream) do
@@ -14,25 +20,14 @@ defmodule Astreu.Consumer.Service do
     end)
   end
 
-  @spec unsubscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
-          Google.Protobuf.Empty.t()
-  def unsubscribe(message, _stream) do
-    Logger.debug("Received request #{inspect(message)}")
-  end
-
   defp handle_message(stream, message) do
-    params = %{message: message, consumer: true, producer: false}
+    params = %{stream: stream, message: message, consumer: true, producer: false}
 
-    with {:ok, msg} <- Protocol.ensure_metadata(params) do
-      case msg.data do
-        {:system, _} -> Protocol.handle_system(stream, msg.data)
-        {:exchange, _} -> Protocol.handle_exchange(stream, msg.data)
-        {:ack, _} -> Protocol.handle_ack(stream, msg.data)
-        _ -> Protocol.handle_invalid(stream, msg.data)
-      end
+    with {:ok, _} <- Protocol.ensure_metadata(params) do
+      Protocol.handle(params)
     else
       {:error, reason} ->
-        Protocol.handle_invalid(stream, message.data, reason)
+        Protocol.handle_invalid(reason, params)
     end
   end
 end

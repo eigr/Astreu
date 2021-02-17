@@ -10,16 +10,18 @@ defmodule Astreu.Producer.Service do
     Logger.debug("Received publisher request #{inspect(message_stream)}")
 
     Enum.each(message_stream, fn message ->
-      params = %{message: message, consumer: false, producer: true}
-
-      with {:ok, msg} <- Protocol.ensure_metadata(params) do
-        case Astreu.Producer.Dispatcher.dispatch(msg) do
-          # ACK with success
-          :ok -> Server.send_reply(stream, Astreu.Protocol.Message.new())
-          # ACK without success
-          _ -> Server.send_reply(stream, Astreu.Protocol.Message.new())
-        end
-      end
+      handle_message(stream, message)
     end)
+  end
+
+  defp handle_message(stream, message) do
+    params = %{stream: stream, message: message, consumer: false, producer: true}
+
+    with {:ok, msg} <- Protocol.ensure_metadata(params) do
+      Protocol.handle(params)
+    else
+      {:error, reason} ->
+        Protocol.handle_invalid(reason, params)
+    end
   end
 end
