@@ -17,9 +17,9 @@ defmodule Astreu.Consumer.Subscriber.Service do
     )
   end
 
-  rpc :Subscribe, stream(Astreu.Protocol.Message), stream(Astreu.Protocol.Message)
+  rpc(:Subscribe, stream(Astreu.Protocol.Message), stream(Astreu.Protocol.Message))
 
-  rpc :Unsubscribe, Astreu.Protocol.Message, Google.Protobuf.Empty
+  rpc(:Unsubscribe, Astreu.Protocol.Message, Google.Protobuf.Empty)
 end
 
 defmodule Astreu.Consumer.Subscriber.Stub do

@@ -13,7 +13,7 @@ defmodule Astreu.Producer.Publisher.Service do
     )
   end
 
-  rpc :Publish, stream(Astreu.Protocol.Message), stream(Astreu.Protocol.Message)
+  rpc(:Publish, stream(Astreu.Protocol.Message), stream(Astreu.Protocol.Message))
 end
 
 defmodule Astreu.Producer.Publisher.Stub do
