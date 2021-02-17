@@ -66,24 +66,24 @@ defmodule Astreu.ProtocolBehaviour do
 
     if producer do
       Dispatcher.dispatch(msg.metadata.topic, msg)
-      #case Dispatcher.dispatch(msg.metadata.topic, msg) do
-        # ACK with success
+      # case Dispatcher.dispatch(msg.metadata.topic, msg) do
+      # ACK with success
       #  :ok -> Server.send_reply(stream, Astreu.Protocol.Message.new())
-        # ACK without success
+      # ACK without success
       # _ -> Server.send_reply(stream, Astreu.Protocol.Message.new())
-      #end
+      # end
     end
 
     if consumer do
       topic = "replies.#{msg.metadata.topic}:#{msg.metadata.producerId}"
       Dispatcher.dispatch(topic, msg)
 
-      #case Dispatcher.dispatch(topic, msg) do
-        # ACK with success
+      # case Dispatcher.dispatch(topic, msg) do
+      # ACK with success
       #  :ok -> Server.send_reply(stream, Astreu.Protocol.Message.new())
-        # ACK without success
+      # ACK without success
       #  _ -> Server.send_reply(stream, Astreu.Protocol.Message.new())
-      #end
+      # end
     end
 
     params
