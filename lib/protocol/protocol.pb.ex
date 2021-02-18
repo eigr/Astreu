@@ -11,9 +11,9 @@ defmodule Astreu.Protocol.Failure.Type do
     )
   end
 
-  field(:TRANSIENT, 0)
+  field :TRANSIENT, 0
 
-  field(:FATAL, 1)
+  field :FATAL, 1
 end
 
 defmodule Astreu.Protocol.Ack.Reason do
@@ -30,11 +30,11 @@ defmodule Astreu.Protocol.Ack.Reason do
     )
   end
 
-  field(:ACCEPT, 0)
+  field :ACCEPT, 0
 
-  field(:REJECT, 1)
+  field :REJECT, 1
 
-  field(:KNOWLEDGE, 2)
+  field :KNOWLEDGE, 2
 end
 
 defmodule Astreu.Protocol.Metadata.PropertiesEntry do
@@ -58,8 +58,8 @@ defmodule Astreu.Protocol.Metadata.PropertiesEntry do
     )
   end
 
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
+  field :key, 1, type: :string
+  field :value, 2, type: :string
 end
 
 defmodule Astreu.Protocol.Metadata do
@@ -97,11 +97,11 @@ defmodule Astreu.Protocol.Metadata do
     )
   end
 
-  field(:topic, 1, type: :string)
-  field(:producerId, 2, type: :string)
-  field(:correlation, 3, type: :string)
-  field(:properties, 4, repeated: true, type: Astreu.Protocol.Metadata.PropertiesEntry, map: true)
-  field(:timestamp, 5, type: Google.Protobuf.Timestamp)
+  field :topic, 1, type: :string
+  field :producerId, 2, type: :string
+  field :correlation, 3, type: :string
+  field :properties, 4, repeated: true, type: Astreu.Protocol.Metadata.PropertiesEntry, map: true
+  field :timestamp, 5, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Protocol.Info.PropertiesEntry do
@@ -125,8 +125,8 @@ defmodule Astreu.Protocol.Info.PropertiesEntry do
     )
   end
 
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
+  field :key, 1, type: :string
+  field :value, 2, type: :string
 end
 
 defmodule Astreu.Protocol.Info do
@@ -159,9 +159,9 @@ defmodule Astreu.Protocol.Info do
     )
   end
 
-  field(:uuid, 1, type: :string)
-  field(:properties, 2, repeated: true, type: Astreu.Protocol.Info.PropertiesEntry, map: true)
-  field(:timestamp, 3, type: Google.Protobuf.Timestamp)
+  field :uuid, 1, type: :string
+  field :properties, 2, repeated: true, type: Astreu.Protocol.Info.PropertiesEntry, map: true
+  field :timestamp, 3, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Protocol.Failure do
@@ -193,10 +193,10 @@ defmodule Astreu.Protocol.Failure do
     )
   end
 
-  field(:uuid, 1, type: :string)
-  field(:correlation, 2, type: :string)
-  field(:description, 3, type: :string)
-  field(:timestamp, 4, type: Google.Protobuf.Timestamp)
+  field :uuid, 1, type: :string
+  field :correlation, 2, type: :string
+  field :description, 3, type: :string
+  field :timestamp, 4, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Protocol.Connect.PropertiesEntry do
@@ -220,8 +220,8 @@ defmodule Astreu.Protocol.Connect.PropertiesEntry do
     )
   end
 
-  field(:key, 1, type: :string)
-  field(:value, 2, type: :string)
+  field :key, 1, type: :string
+  field :value, 2, type: :string
 end
 
 defmodule Astreu.Protocol.Connect do
@@ -259,11 +259,11 @@ defmodule Astreu.Protocol.Connect do
     )
   end
 
-  field(:uuid, 1, type: :string)
-  field(:topic, 2, type: :string)
-  field(:subscription, 3, type: :string)
-  field(:properties, 4, repeated: true, type: Astreu.Protocol.Connect.PropertiesEntry, map: true)
-  field(:timestamp, 5, type: Google.Protobuf.Timestamp)
+  field :uuid, 1, type: :string
+  field :topic, 2, type: :string
+  field :subscription, 3, type: :string
+  field :properties, 4, repeated: true, type: Astreu.Protocol.Connect.PropertiesEntry, map: true
+  field :timestamp, 5, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Protocol.Disconnect do
@@ -293,10 +293,10 @@ defmodule Astreu.Protocol.Disconnect do
     )
   end
 
-  field(:uuid, 1, type: :string)
-  field(:topic, 2, type: :string)
-  field(:subscription, 3, type: :string)
-  field(:timestamp, 4, type: Google.Protobuf.Timestamp)
+  field :uuid, 1, type: :string
+  field :topic, 2, type: :string
+  field :subscription, 3, type: :string
+  field :timestamp, 4, type: Google.Protobuf.Timestamp
 end
 
 defmodule Astreu.Protocol.System do
@@ -327,11 +327,11 @@ defmodule Astreu.Protocol.System do
     )
   end
 
-  oneof(:data, 0)
-  field(:info, 1, type: Astreu.Protocol.Info, oneof: 0)
-  field(:failure, 2, type: Astreu.Protocol.Failure, oneof: 0)
-  field(:connect, 3, type: Astreu.Protocol.Connect, oneof: 0)
-  field(:disconnect, 4, type: Astreu.Protocol.Disconnect, oneof: 0)
+  oneof :data, 0
+  field :info, 1, type: Astreu.Protocol.Info, oneof: 0
+  field :failure, 2, type: Astreu.Protocol.Failure, oneof: 0
+  field :connect, 3, type: Astreu.Protocol.Connect, oneof: 0
+  field :disconnect, 4, type: Astreu.Protocol.Disconnect, oneof: 0
 end
 
 defmodule Astreu.Protocol.Exchange do
@@ -359,9 +359,9 @@ defmodule Astreu.Protocol.Exchange do
     )
   end
 
-  field(:uuid, 1, type: :string)
-  field(:metadata, 2, type: Astreu.Protocol.Metadata)
-  field(:message, 3, type: Google.Protobuf.Any)
+  field :uuid, 1, type: :string
+  field :metadata, 2, type: Astreu.Protocol.Metadata
+  field :message, 3, type: Google.Protobuf.Any
 end
 
 defmodule Astreu.Protocol.Ack do
@@ -394,10 +394,10 @@ defmodule Astreu.Protocol.Ack do
     )
   end
 
-  field(:uuid, 1, type: :string)
-  field(:reason, 2, type: Astreu.Protocol.Ack.Reason, enum: true)
-  field(:metadata, 3, type: Astreu.Protocol.Metadata)
-  field(:subscription, 4, type: :string)
+  field :uuid, 1, type: :string
+  field :reason, 2, type: Astreu.Protocol.Ack.Reason, enum: true
+  field :metadata, 3, type: Astreu.Protocol.Metadata
+  field :subscription, 4, type: :string
 end
 
 defmodule Astreu.Protocol.Message do
@@ -425,8 +425,8 @@ defmodule Astreu.Protocol.Message do
     )
   end
 
-  oneof(:data, 0)
-  field(:system, 1, type: Astreu.Protocol.System, oneof: 0)
-  field(:exchange, 2, type: Astreu.Protocol.Exchange, oneof: 0)
-  field(:ack, 3, type: Astreu.Protocol.Ack, oneof: 0)
+  oneof :data, 0
+  field :system, 1, type: Astreu.Protocol.System, oneof: 0
+  field :exchange, 2, type: Astreu.Protocol.Exchange, oneof: 0
+  field :ack, 3, type: Astreu.Protocol.Ack, oneof: 0
 end
