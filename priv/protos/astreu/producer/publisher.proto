@@ -1,8 +1,11 @@
 syntax = "proto3";
 
+option csharp_namespace = "Io.Eigr.Astreu.Producer";
+
 option java_multiple_files = true;
-option java_package = "io.astreu.producer";
-option java_outer_classname = "ProtocolProto";
+option java_package = "io.eigr.astreu.producer";
+option java_outer_classname = "PublisherProto";
+
 option optimize_for = SPEED;
 
 package astreu.producer;

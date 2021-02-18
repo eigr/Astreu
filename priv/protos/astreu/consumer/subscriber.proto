@@ -1,8 +1,11 @@
 syntax = "proto3";
 
+option csharp_namespace = "Io.Eigr.Astreu.Consumer";
+
 option java_multiple_files = true;
-option java_package = "io.astreu.consumer";
-option java_outer_classname = "ProtocolProto";
+option java_package = "io.eigr.astreu.consumer";
+option java_outer_classname = "SubscriberProto";
+
 option optimize_for = SPEED;
 
 package astreu.consumer;
