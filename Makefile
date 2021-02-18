@@ -1,4 +1,4 @@
-image=eigr/astreu:0.1.0
+image=eigr/astreu:0.1.1
 
 .PHONY: all clean
 
