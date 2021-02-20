@@ -36,5 +36,5 @@
 
 ## Client SDK's
 
-* [Astreu4J](https://github.com/eigr/astreu4j)
+* [Astreu4j](https://github.com/eigr/astreu4j)
 * [GO Lang Astreu](https://github.com/eigr/astreu-go)
