@@ -1,6 +1,9 @@
 defmodule Astreu.HTTP.PlugBootstrap do
   require Logger
 
+  @sol_socket 1
+  @so_reuseport 15
+
   @http_port 9100
   @schedulers System.schedulers_online()
 
@@ -11,7 +14,10 @@ defmodule Astreu.HTTP.PlugBootstrap do
       scheme: :http,
       plug: Astreu.Http.Endpoint,
       options: [port: @http_port],
-      transport_options: [num_acceptors: @schedulers]
+      transport_options: [
+        num_acceptors: @schedulers,
+        socket_opts: [{:raw, @sol_socket, @so_reuseport, <<1::size(32)>>}]
+      ]
     )
   end
 

@@ -4,6 +4,7 @@ defmodule Astreu.SubscriberManager do
   alias GRPC.Server
   alias Phoenix.PubSub
 
+  @fullsweep_after 0
   @registry Astreu.TopicsRegistry
 
   @doc """
@@ -27,7 +28,7 @@ defmodule Astreu.SubscriberManager do
 
     GenServer.start_link(__MODULE__, state,
       name: via_tuple(get_subscriber(state)),
-      spawn_opt: [fullsweep_after: desired_value]
+      spawn_opt: [fullsweep_after: @fullsweep_after]
     )
   end
 
