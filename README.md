@@ -34,3 +34,7 @@
 # docker run --rm --net=host -e RELEASE_NODE=unique_name_peer_node eigr/astreu:0.1.1
 ```
 
+## Client SDK's
+
+* [Astreu4J](https://github.com/eigr/astreu4j)
+* [GO Lang Astreu](https://github.com/eigr/astreu-go)
