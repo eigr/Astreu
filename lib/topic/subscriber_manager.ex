@@ -24,7 +24,11 @@ defmodule Astreu.SubscriberManager do
 
   def start_link(state \\ []) do
     Logger.info("Starting Subscriber Manager with state #{inspect(state)}")
-    GenServer.start_link(__MODULE__, state, name: via_tuple(get_subscriber(state)))
+
+    GenServer.start_link(__MODULE__, state,
+      name: via_tuple(get_subscriber(state)),
+      spawn_opt: [fullsweep_after: desired_value]
+    )
   end
 
   @impl true

@@ -17,7 +17,12 @@ defmodule Astreu.Supervisor do
         cluster_supervisor(),
         Astreu.Producer.Dispatcher.child_spec([]),
         {Horde.Registry, [name: @registry, keys: :unique]},
-        {Horde.DynamicSupervisor, [name: @subscribers_supervisor, strategy: :one_for_one]},
+        {Horde.DynamicSupervisor,
+         [
+           name: @subscribers_supervisor,
+           strategy: :one_for_one,
+           process_redistribution: :active
+         ]},
         %{
           id: Astreu.HordeConnector,
           restart: :transient,
@@ -41,6 +46,7 @@ defmodule Astreu.Supervisor do
         Astreu.NodeListener,
         @pubsub.init([]),
         Astreu.HTTP.PlugBootstrap.setup(),
+        Astreu.HTTP.PlugBootstrap.drainer(),
         {GRPC.Server.Supervisor, {Astreu.Endpoint, 9980}}
       ]
       |> Enum.reject(&is_nil/1)

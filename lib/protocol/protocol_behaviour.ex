@@ -26,6 +26,67 @@ defmodule Astreu.ProtocolBehaviour do
     end
   end
 
+  defp handle_system(
+         %{stream: stream, message: message, consumer: consumer, producer: producer} = params
+       ) do
+    system = elem(message.data, 1)
+
+    case system.data do
+      {:connect, _} -> handle_connect(system.data, params)
+      {:disconnect, _} -> handle_disconnect(system.data, params)
+      {:info, _} -> handle_info(system.data, params)
+      {:failure, _} -> handle_failure(system.data, params)
+      _ -> handle_invalid(params)
+    end
+  end
+
+  defp handle_connect(
+         data,
+         %{stream: stream, message: message, consumer: consumer, producer: producer} = params
+       ) do
+    # TODO lookup before register new process
+    Logger.debug("Connect subscriber #{inspect(data)}")
+    connection = elem(data, 1)
+
+    name =
+      if consumer do
+        "#{connection.topic}:#{connection.subscription}"
+      else
+        "replies.#{connection.topic}.#{connection.uuid}:#{connection.uuid}"
+      end
+
+    topic_name =
+      if consumer do
+        connection.topic
+      else
+        "replies.#{connection.topic}.#{connection.uuid}"
+      end
+
+    subscription =
+      if consumer do
+        connection.subscription
+      else
+        connection.uuid
+      end
+
+    state = %{
+      name: name,
+      stream: stream,
+      topic: topic_name,
+      uuid: connection.uuid,
+      timestamp: connection.timestamp,
+      properties: connection.properties,
+      subscriber: subscription
+    }
+
+    Horde.DynamicSupervisor.start_child(
+      Astreu.SubscriberSupervisor,
+      {Astreu.SubscriberManager, state}
+    )
+
+    SubscriberManager.subscribe(state[:name])
+  end
+
   def handle_invalid(
         %{stream: stream, message: message, consumer: consumer, producer: producer} = params
       ) do
@@ -43,20 +104,6 @@ defmodule Astreu.ProtocolBehaviour do
       stream,
       Astreu.Protocol.Message.new(data: {:exchange, Astreu.Protocol.Exchange.new()})
     )
-  end
-
-  defp handle_system(
-         %{stream: stream, message: message, consumer: consumer, producer: producer} = params
-       ) do
-    system = elem(message.data, 1)
-
-    case system.data do
-      {:connect, _} -> handle_connect(system.data, params)
-      {:disconnect, _} -> handle_disconnect(system.data, params)
-      {:info, _} -> handle_info(system.data, params)
-      {:failure, _} -> handle_failure(system.data, params)
-      _ -> handle_invalid(params)
-    end
   end
 
   defp handle_exchange(
@@ -106,54 +153,6 @@ defmodule Astreu.ProtocolBehaviour do
 
   defp ensure_ack(message) do
     {:ok, message}
-  end
-
-  # handle messages
-  defp handle_connect(
-         data,
-         %{stream: stream, message: message, consumer: consumer, producer: producer} = params
-       ) do
-    # TODO lookup before register new process
-    Logger.debug("Connect subscriber #{inspect(data)}")
-    connection = elem(data, 1)
-
-    name =
-      if consumer do
-        "#{connection.topic}:#{connection.subscription}"
-      else
-        "replies.#{connection.topic}.#{connection.uuid}:#{connection.uuid}"
-      end
-
-    topic_name =
-      if consumer do
-        connection.topic
-      else
-        "replies.#{connection.topic}.#{connection.uuid}"
-      end
-
-    subscription =
-      if consumer do
-        connection.subscription
-      else
-        connection.uuid
-      end
-
-    state = %{
-      name: name,
-      stream: stream,
-      topic: topic_name,
-      uuid: connection.uuid,
-      timestamp: connection.timestamp,
-      properties: connection.properties,
-      subscriber: subscription
-    }
-
-    Horde.DynamicSupervisor.start_child(
-      Astreu.SubscriberSupervisor,
-      {Astreu.SubscriberManager, state}
-    )
-
-    SubscriberManager.subscribe(state[:name])
   end
 
   defp handle_disconnect(data, params) do
