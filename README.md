@@ -2,7 +2,7 @@
 
 **High-performance Messaging System based on gRPC protocol** (***this is a WIP no production ready***)
 
-![Astreu CI](https://github.com/eigr/Astreu/workflows/Astreu%20CI/badge.svg)
+![Astreu CI](https://github.com/eigr/Astreu/workflows/Astreu%20CI/badge.svg) [![Astreu Release](https://github.com/eigr/Astreu/actions/workflows/release.yml/badge.svg)](https://github.com/eigr/Astreu/actions/workflows/release.yml)
 
 ## Architecture Overview
 
