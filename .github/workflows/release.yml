@@ -50,5 +50,6 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
         repository: ${{ github.repository }}/astreu
+        tags: ["0.1.2"]
         tag_with_sha: true
         tag_with_ref: true
