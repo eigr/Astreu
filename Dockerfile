@@ -5,7 +5,7 @@ ENV MIX_ENV=prod
 RUN mkdir /app
 WORKDIR /app
 
-RUN apk add --no-cache --update git
+RUN apk add --no-cache --update git alpine-sdk zstd
 
 RUN mkdir ./config
 COPY config/config.exs ./config
