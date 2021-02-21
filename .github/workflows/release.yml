@@ -44,11 +44,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
     - name: Build container image
-      uses: docker/build-push-action@v1
+      uses: docker/build-push-action@v2
       with:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
         registry: docker.pkg.github.com
-        repository: ${{ github.repository }}/astreu
+        repository: docker.pkg.github.com/eigr/astreu/astreu/astreu
         tag_with_sha: true
         tag_with_ref: true
