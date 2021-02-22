@@ -4,6 +4,7 @@ defmodule Astreu.Supervisor do
   require Logger
 
   @registry Astreu.TopicsRegistry
+  @action_registry Astreu.ActionRegistry
   @subscribers_supervisor Astreu.SubscriberSupervisor
   @pubsub Application.get_env(:astreu, :producer_adapter)
 
@@ -17,6 +18,7 @@ defmodule Astreu.Supervisor do
         cluster_supervisor(),
         Astreu.Producer.Dispatcher.child_spec([]),
         {Horde.Registry, [name: @registry, keys: :unique]},
+        {Horde.Registry, [name: @action_registry, keys: :unique]},
         {Horde.DynamicSupervisor,
          [
            name: @subscribers_supervisor,

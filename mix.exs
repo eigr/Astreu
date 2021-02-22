@@ -30,7 +30,7 @@ defmodule Astreu.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:bakeware, "~> 0.1.5"},
+      # {:bakeware, "~> 0.1.5"},
       {:horde, "~> 0.8.3"},
       {:libcluster, "~> 3.2.1"},
       {:google_protos, "~> 0.1.0"},
@@ -45,6 +45,7 @@ defmodule Astreu.MixProject do
       {:httpoison, "~> 1.6"},
       {:phoenix_pubsub, "~> 2.0"},
       {:uuid, "~> 1.1"},
+      {:wasmex, "~> 0.3.0"},
       {:local_cluster, "~> 1.2", only: [:test]}
     ]
   end
@@ -53,12 +54,12 @@ defmodule Astreu.MixProject do
     [
       astreu: [
         include_executables_for: [:unix],
-        applications: [runtime_tools: :permanent],
-        steps: [
-          :assemble,
-          &Bakeware.assemble/1
-        ],
-        compression_level: 19
+        applications: [runtime_tools: :permanent]
+        # steps: [
+        #  :assemble,
+        #  &Bakeware.assemble/1
+        # ],
+        # compression_level: 19
       ]
     ]
   end

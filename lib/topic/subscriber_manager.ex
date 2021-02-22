@@ -72,6 +72,7 @@ defmodule Astreu.SubscriberManager do
     {:noreply, state ++ [value]}
   end
 
+  @impl true
   def terminate(reason, state) do
     cleanup(reason, state)
     state
