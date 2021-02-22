@@ -139,6 +139,14 @@ defmodule Astreu.ProtocolBehaviour do
   defp handle_ack(
          %{stream: stream, message: message, consumer: consumer, producer: producer} = params
        ) do
+    msg = elem(message.data, 1)
+
+    if consumer do
+      topic = "replies.#{msg.metadata.topic}.#{msg.metadata.producerId}"
+      Logger.debug("Send Ack response to topic #{topic}")
+      Dispatcher.dispatch(topic, message)
+    end
+
     params
   end
 
