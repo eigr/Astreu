@@ -122,7 +122,7 @@ defmodule Astreu.ProtocolBehaviour do
     end
 
     if consumer do
-      topic = "replies.#{msg.metadata.topic}:#{msg.metadata.producerId}"
+      topic = "replies.#{msg.metadata.topic}.#{msg.metadata.producerId}"
       Dispatcher.dispatch(topic, message)
 
       # case Dispatcher.dispatch(topic, msg) do
