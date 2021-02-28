@@ -17,6 +17,7 @@ defmodule Astreu.ProtocolBehaviour do
     end
   end
 
+  @spec handle(%{consumer: any, message: atom | %{data: any}, producer: any, stream: any}) :: any
   def handle(%{stream: stream, message: message, consumer: consumer, producer: producer} = params) do
     case message.data do
       {:system, _} -> handle_system(params)
@@ -122,7 +123,7 @@ defmodule Astreu.ProtocolBehaviour do
     end
 
     if consumer do
-      topic = "replies.#{msg.metadata.topic}:#{msg.metadata.producerId}"
+      topic = "replies.#{msg.metadata.topic}.#{msg.metadata.producerId}"
       Dispatcher.dispatch(topic, message)
 
       # case Dispatcher.dispatch(topic, msg) do
