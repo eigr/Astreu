@@ -4,7 +4,7 @@ defmodule Astreu.WasmHandler do
   """
 
   @doc """
-  Says hello to the given `name`.
+  Use Wasm in Elixir.
 
   ## Examples
 
