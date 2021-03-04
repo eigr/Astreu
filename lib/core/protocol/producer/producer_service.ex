@@ -1,11 +1,11 @@
 defmodule Astreu.Core.Protocol.Producer.Service do
-  use GRPC.Server, service: Astreu.Producer.Publisher.Service
+  use GRPC.Server, service: Astreu.Core.Protocol.Producer.Publisher.Service
   require Logger
   alias GRPC.Server
   alias Astreu.Core.Protocol.ProtocolBehaviour, as: Protocol
 
-  @spec publish(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
-          Astreu.Protocol.Message.t()
+  @spec publish(Astreu.Core.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
+          Astreu.Core.Protocol.Message.t()
   def publish(message_stream, stream) do
     Logger.debug("Received publisher request #{inspect(message_stream)}")
 

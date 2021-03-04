@@ -4,8 +4,8 @@ defmodule Astreu.Core.Protocol.ProtocolBehaviour do
   alias Astreu.Core.Protocol.Topic.SubscriberManager
   alias Astreu.Core.Protocol.Producer.Dispatcher
 
-  @spec ensure_metadata(Astreu.Protocol.Message.t()) ::
-          {:ok, Astreu.Protocol.Message.t()} | {:error, String.t()}
+  @spec ensure_metadata(Astreu.Core.Protocol.Message.t()) ::
+          {:ok, Astreu.Core.Protocol.Message.t()} | {:error, String.t()}
   def ensure_metadata(
         %{stream: stream, message: message, consumer: consumer, producer: producer} = params
       ) do
@@ -92,7 +92,7 @@ defmodule Astreu.Core.Protocol.ProtocolBehaviour do
       ) do
     Server.send_reply(
       stream,
-      Astreu.Protocol.Message.new(data: {:exchange, Astreu.Protocol.Exchange.new()})
+      Astreu.Core.Protocol.Message.new(data: {:exchange, Astreu.Core.Protocol.Message.new()})
     )
   end
 
@@ -102,7 +102,7 @@ defmodule Astreu.Core.Protocol.ProtocolBehaviour do
       ) do
     Server.send_reply(
       stream,
-      Astreu.Protocol.Message.new(data: {:exchange, Astreu.Protocol.Exchange.new()})
+      Astreu.Core.Protocol.Message.new(data: {:exchange, Astreu.Core.Protocol.Message.new()})
     )
   end
 
@@ -115,9 +115,9 @@ defmodule Astreu.Core.Protocol.ProtocolBehaviour do
       Dispatcher.dispatch(msg.metadata.topic, message)
       # case Dispatcher.dispatch(msg.metadata.topic, msg) do
       # ACK with success
-      #  :ok -> Server.send_reply(stream, Astreu.Protocol.Message.new())
+      #  :ok -> Server.send_reply(stream, Astreu.Core.Protocol.Message.new())
       # ACK without success
-      # _ -> Server.send_reply(stream, Astreu.Protocol.Message.new())
+      # _ -> Server.send_reply(stream, Astreu.Core.Protocol.Message.new())
       # end
     end
 
@@ -127,9 +127,9 @@ defmodule Astreu.Core.Protocol.ProtocolBehaviour do
 
       # case Dispatcher.dispatch(topic, msg) do
       # ACK with success
-      #  :ok -> Server.send_reply(stream, Astreu.Protocol.Message.new())
+      #  :ok -> Server.send_reply(stream, Astreu.Core.Protocol.Message.new())
       # ACK without success
-      #  _ -> Server.send_reply(stream, Astreu.Protocol.Message.new())
+      #  _ -> Server.send_reply(stream, Astreu.Core.Protocol.Message.new())
       # end
     end
 

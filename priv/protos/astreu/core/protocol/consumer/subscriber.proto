@@ -10,7 +10,7 @@ option optimize_for = SPEED;
 
 package astreu.core.protocol.consumer;
 
-import "protocol/protocol.proto";
+import "core/protocol/protocol.proto";
 import "google/protobuf/empty.proto";
 
 /*

@@ -10,7 +10,7 @@ option optimize_for = SPEED;
 
 package astreu.core.protocol.producer;
 
-import "protocol/protocol.proto";
+import "core/protocol/protocol.proto";
 
 service Publisher {
     rpc Publish(stream astreu.core.protocol.Message) returns (stream astreu.core.protocol.Message) {}
