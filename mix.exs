@@ -45,6 +45,7 @@ defmodule Astreu.MixProject do
       {:httpoison, "~> 1.6"},
       {:phoenix_pubsub, "~> 2.0"},
       {:uuid, "~> 1.1"},
+      {:wasmex, "~> 0.3.0"},
       {:local_cluster, "~> 1.2", only: [:test]}
     ]
   end
