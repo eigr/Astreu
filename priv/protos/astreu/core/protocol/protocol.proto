@@ -1,0 +1,167 @@
+syntax = "proto3";
+
+option csharp_namespace = "Io.Eigr.Astreu.Protocol";
+
+option java_multiple_files = true;
+option java_package = "io.eigr.astreu.protocol";
+option java_outer_classname = "ProtocolProto";
+
+option optimize_for = SPEED;
+
+package astreu.core.protocol;
+
+import "google/protobuf/any.proto";
+import "google/protobuf/timestamp.proto";
+
+/*
+ * In the associated metadata there are some types of messages.
+ * They may contain:
+ *     replyTo:     Attribute used by the message producer to 
+ *                  indicate on which topic a possible reply should be addressed. (Optional).
+ *     correlation: Must be used when replyTo is defined to identify via uuid 
+ *                  which original message is being answered by that current message. 
+ *                  (Required if replyTo is set)
+ *     properties:  A map of various or customized properties. (Optional).
+ *     timestamp:   The timestamp of the creation of this message. (Required). 
+ **/
+message Metadata {
+  string topic = 1;
+  string producerId = 2;
+  string correlation = 3;
+  map<string, string> properties = 4;
+  google.protobuf.Timestamp timestamp = 5;
+}
+
+/*
+ * System information message.
+ * It can be used, for example, to indicate the number of servers 
+ * added or removed to the cluster. 
+ **/
+message Info {
+  string uuid = 1;
+  map<string, string> properties = 2;
+  google.protobuf.Timestamp timestamp = 3;
+}
+
+/*
+ * System message to indicate any type of failure that occurred during message processing.
+ * A failure can be of two types:
+ *      FATAL:     If the Broker sends a failure of this type, it is recommended that the client 
+ *                 finish the current gRPC stream and try to reconnect later because there is no 
+ *                 guarantee that this stream will be healthy.
+ *      TRANSIENT: A transient failure indicates a failure during the processing of a specific message, 
+ *                 indicating for example that certain validations of the message did not occur successfully.
+ *
+ * A failure message must contain the following attributes:
+ *     uuid:        Unique identifier of the message.
+ *     correlation: Unique identifier of the message that caused the failure.
+ *     description: A description of the reason for the failure.
+ *     timestamp:   The timestamp of the time of failure occurs.
+ **/
+message Failure {
+  enum Type {
+    TRANSIENT = 0;
+    FATAL = 1;
+  }
+  string uuid = 1;
+  string correlation = 2;
+  string description = 3;
+  google.protobuf.Timestamp timestamp = 4;
+}
+
+/*
+ * Connect must be used by both consumers and producers to establish a persistent connection with the Broker. 
+ * This message must be the first message sent in a gRPC stream established with the Broker 
+ * and serves to register both subscribers and producers. 
+ **/
+message Connect {
+  string uuid = 1; // Unique identifier
+  string topic = 2; // name of a topic to register. 
+                    // can be created in advance or dynamically (if the topic does not exist at the time of connection it will be created) 
+  string subscription = 3; // name of subscription. (both consumers and producers must provide a unique registration name )
+  map<string, string> properties = 4; // A property map can be passed to the Broker in order to make some type of configuration 
+  google.protobuf.Timestamp timestamp = 5; // Moment of message creation 
+}
+
+/*
+ * Disconnect serves when the customer wants to end a stream in a controlled manner. 
+ **/
+message Disconnect {
+  string uuid = 1; // Unique identifier
+  string topic = 2; // name of a topic to register
+  string subscription = 3; // name of subscription. (both consumers and producers must provide a unique registration name )
+  google.protobuf.Timestamp timestamp = 4; // Moment of message creation
+}
+
+/*
+ * A system message can be sent with one of the following constituents:
+ *     Info: see Info
+ *     Failure: see Failure
+ *     Connect: see Connect
+ *     Disconnect: see Disconnect
+ **/
+message System {
+  oneof data {
+    Info info = 1;
+    Failure failure = 2;
+    Connect connect = 3;
+    Disconnect disconnect = 4;
+  }
+}
+
+/*
+ * Exchange is a type of message used to exchange information between producers and consumers.
+ * It has a uuid field, a metadata field (see Metadata) and an attribute containing the message payload. 
+ **/
+message Exchange {
+  string uuid = 1; // Unique identifier of a ack message.
+  Metadata metadata = 2; // Metadata. Must contain the Timestamp of creation of this message.
+  google.protobuf.Any message = 3; // Payload of this message.
+}
+
+/*
+ * Ack is used for confirmation of sending or receiving messages.
+ * When a customer connects and receives a message, 
+ * he must confirm receipt of the message by sending an 'Ack' message stating the reason for the confirmation. 
+ * Can be:
+ *    ACCEPT:    When the message is received and probably successfully processed.
+ *    REJECT:    When the message was received but it was probably not processed successfully. 
+ *               The message will be maintained by the Broker for a later delivery attempt. 
+ *              (Only when the publishing adapter is of the persistent type)
+ *    KNOWLEDGE: Similar to the ACCEPT type but has slightly different semantics, 
+ *               meaning that no action should be taken between the parties. 
+ *               Used to exchange System messages or when the Broker wishes 
+ *               to inform the producer that the message has been forwarded for delivery.
+ * 
+ * Unlike other messaging systems Astreu will always inform the producer of the message 
+ * about the receipt of receipt from consumers. Thus giving more transparency and control 
+ * to producers about what actually happened with the message that was sent and when it happened. 
+ **/
+message Ack {
+  enum Reason {
+    ACCEPT = 0;
+    REJECT = 1;
+    KNOWLEDGE = 2;
+  }
+
+  string uuid = 1; // Unique identifier of a ack message
+  Reason reason = 2; // Reason of the message confirmation
+  Metadata metadata = 3; // Metadata. Must contain the original message uuid in the 'correlation' attribute 
+  string subscription = 4; // Subscription identifier 
+}
+
+/*
+ * Message is a box for various sub types of messages 
+ * that can be exchanged between the clients and the Broker via gRPC stream channel. 
+ * It can currently contain one of three message types:
+ *     System: System messages, such as Connect and Disconnect, among others (see System).
+ *     Exchange: The useful message between producers and consumers (see Exchange)
+ *     Ack: A receipt confirmation message (see Ack) 
+ **/
+message Message {
+  oneof data {
+    System system = 1;
+    Exchange exchange = 2;
+    Ack ack = 3;
+  }
+}
