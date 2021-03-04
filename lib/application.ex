@@ -6,7 +6,7 @@ defmodule Astreu.Application do
   def start(_type, _args) do
     Node.set_cookie(String.to_atom("astreu"))
 
-    Astreu.Metrics.Setup.setup()
-    Astreu.Supervisor.start_link([])
+    Astreu.Server.Http.Metrics.Setup.setup()
+    Astreu.Core.Supervisor.start_link([])
   end
 end

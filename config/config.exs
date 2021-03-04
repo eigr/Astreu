@@ -27,4 +27,4 @@ config :libcluster,
     ]
   ]
 
-config :astreu, producer_adapter: Astreu.Producer.PubSubTransientAdapter
+config :astreu, producer_adapter: Astreu.PubSub.Adapter.TransientAdapter

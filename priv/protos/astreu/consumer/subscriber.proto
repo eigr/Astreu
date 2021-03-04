@@ -8,7 +8,7 @@ option java_outer_classname = "SubscriberProto";
 
 option optimize_for = SPEED;
 
-package astreu.consumer;
+package astreu.core.protocol.consumer;
 
 import "protocol/protocol.proto";
 import "google/protobuf/empty.proto";
@@ -29,9 +29,9 @@ service Subscriber {
      *         to the client informing the reason for the failure (see Failure and System).
      *      4. For each message received, the client must send a Messgae message containing the Ack confirming or rejecting the message.
     */
-    rpc Subscribe(stream astreu.protocol.Message) returns (stream astreu.protocol.Message) {}
+    rpc Subscribe(stream astreu.core.protocol.Message) returns (stream astreu.core.protocol.Message) {}
 
 
-    rpc Unsubscribe(astreu.protocol.Message) returns (google.protobuf.Empty) {}
+    rpc Unsubscribe(astreu.core.protocol.Message) returns (google.protobuf.Empty) {}
 }
  

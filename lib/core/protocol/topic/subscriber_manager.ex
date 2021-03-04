@@ -1,4 +1,4 @@
-defmodule Astreu.SubscriberManager do
+defmodule Astreu.Core.Protocol.Topic.SubscriberManager do
   use GenServer
   require Logger
   alias GRPC.Server

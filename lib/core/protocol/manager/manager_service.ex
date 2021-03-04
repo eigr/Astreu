@@ -1,4 +1,4 @@
-defmodule Astreu.Manager.Service do
+defmodule Astreu.Core.Protocol.Manager.Service do
   use GRPC.Server, service: Astreu.Manager.TopicService.Service
   require Logger
   alias GRPC.Server

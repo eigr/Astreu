@@ -1,4 +1,4 @@
-defmodule Astreu.HTTP.PlugBootstrap do
+defmodule Astreu.Server.HTTP.PlugBootstrap do
   require Logger
 
   @sol_socket 1
@@ -12,7 +12,7 @@ defmodule Astreu.HTTP.PlugBootstrap do
 
     Plug.Cowboy.child_spec(
       scheme: :http,
-      plug: Astreu.Http.Endpoint,
+      plug: Astreu.Server.Http.Endpoint,
       options: [port: @http_port],
       transport_options: [
         num_acceptors: @schedulers,
@@ -21,5 +21,5 @@ defmodule Astreu.HTTP.PlugBootstrap do
     )
   end
 
-  def drainer(), do: {Plug.Cowboy.Drainer, refs: [Astreu.Http.Endpoint]}
+  def drainer(), do: {Plug.Cowboy.Drainer, refs: [Astreu.Server.Http.Endpoint]}
 end

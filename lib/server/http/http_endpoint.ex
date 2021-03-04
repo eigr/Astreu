@@ -1,4 +1,4 @@
-defmodule Astreu.Http.Endpoint do
+defmodule Astreu.Server.Http.Endpoint do
   @moduledoc """
   A Plug responsible for logging request info, parsing request body's as JSON,
   matching routes, and dispatching responses.
@@ -11,7 +11,7 @@ defmodule Astreu.Http.Endpoint do
   # Using Plug.Logger for logging request information
   plug(Plug.Logger)
 
-  plug(Astreu.Http.MetricsExporter)
+  plug(Astreu.Server.Http.MetricsExporter)
 
   # responsible for matching routes
   plug(:match)

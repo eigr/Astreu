@@ -1,4 +1,4 @@
-defmodule Astreu.Supervisor do
+defmodule Astreu.Core.Supervisor do
   @moduledoc false
   use Supervisor
   require Logger
@@ -15,7 +15,7 @@ defmodule Astreu.Supervisor do
     children =
       [
         cluster_supervisor(),
-        Astreu.Producer.Dispatcher.child_spec([]),
+        Astreu.Core.Protocol.Producer.Dispatcher.child_spec([]),
         {Horde.Registry, [name: @registry, keys: :unique]},
         {Horde.DynamicSupervisor,
          [
@@ -43,11 +43,11 @@ defmodule Astreu.Supervisor do
             ]
           }
         },
-        Astreu.NodeListener,
+        Astreu.Core.NodeListener,
         @pubsub.init([]),
-        Astreu.HTTP.PlugBootstrap.setup(),
-        Astreu.HTTP.PlugBootstrap.drainer(),
-        {GRPC.Server.Supervisor, {Astreu.Endpoint, 9980}}
+        Astreu.Server.HTTP.PlugBootstrap.setup(),
+        Astreu.Server.HTTP.PlugBootstrap.drainer(),
+        {GRPC.Server.Supervisor, {Astreu.Server.Grpc.Endpoint, 9980}}
       ]
       |> Enum.reject(&is_nil/1)
 

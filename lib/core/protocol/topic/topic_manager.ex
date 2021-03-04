@@ -1,4 +1,4 @@
-defmodule Astreu.TopicManager do
+defmodule Astreu.Core.Protocol.Topic.TopicManager do
   use GenServer
   require Logger
 
@@ -12,8 +12,8 @@ defmodule Astreu.TopicManager do
 
   def child_spec() do
     %{
-      id: Astreu.TopicManager,
-      start: {Astreu.TopicManager, :start_link, []}
+      id: Astreu.Core.Protocol.Topic.TopicManager,
+      start: {Astreu.Core.Protocol.Topic.TopicManager, :start_link, []}
     }
   end
 

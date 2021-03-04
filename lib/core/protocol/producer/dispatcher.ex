@@ -1,4 +1,4 @@
-defmodule Astreu.Producer.Dispatcher do
+defmodule Astreu.Core.Protocol.Producer.Dispatcher do
   use GenServer
   require Logger
 

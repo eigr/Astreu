@@ -1,8 +1,8 @@
-defmodule Astreu.ProtocolBehaviour do
+defmodule Astreu.Core.Protocol.ProtocolBehaviour do
   require Logger
   alias GRPC.Server
-  alias Astreu.SubscriberManager
-  alias Astreu.Producer.Dispatcher
+  alias Astreu.Core.Protocol.Topic.SubscriberManager
+  alias Astreu.Core.Protocol.Producer.Dispatcher
 
   @spec ensure_metadata(Astreu.Protocol.Message.t()) ::
           {:ok, Astreu.Protocol.Message.t()} | {:error, String.t()}
@@ -81,7 +81,7 @@ defmodule Astreu.ProtocolBehaviour do
 
     Horde.DynamicSupervisor.start_child(
       Astreu.SubscriberSupervisor,
-      {Astreu.SubscriberManager, state}
+      {Astreu.Core.Protocol.Topic.SubscriberManager, state}
     )
 
     SubscriberManager.subscribe(state[:name])

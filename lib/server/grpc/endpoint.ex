@@ -1,14 +1,14 @@
-defmodule Astreu.Endpoint do
+defmodule Astreu.Server.Grpc.Endpoint do
   use GRPC.Endpoint
 
   intercept(GRPC.Logger.Server)
   intercept(GRPCPrometheus.ServerInterceptor)
-  intercept(Astreu.Http.AuthenticationInterceptor)
+  intercept(Astreu.Server.Http.AuthenticationInterceptor)
 
   services = [
-    Astreu.Manager.Service,
-    Astreu.Consumer.Service,
-    Astreu.Producer.Service
+    Astreu.Core.Protocol.Manager.Service,
+    Astreu.Core.Protocol.Consumer.Service,
+    Astreu.Core.Protocol.Producer.Service
   ]
 
   run(services)

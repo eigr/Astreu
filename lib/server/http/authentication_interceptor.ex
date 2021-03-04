@@ -1,4 +1,4 @@
-defmodule Astreu.Http.AuthenticationInterceptor do
+defmodule Astreu.Server.Http.AuthenticationInterceptor do
   require Logger
 
   @behaviour GRPC.ServerInterceptor

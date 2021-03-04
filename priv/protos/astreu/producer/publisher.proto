@@ -8,11 +8,11 @@ option java_outer_classname = "PublisherProto";
 
 option optimize_for = SPEED;
 
-package astreu.producer;
+package astreu.core.protocol.producer;
 
 import "protocol/protocol.proto";
 
 service Publisher {
-    rpc Publish(stream astreu.protocol.Message) returns (stream astreu.protocol.Message) {}
+    rpc Publish(stream astreu.core.protocol.Message) returns (stream astreu.core.protocol.Message) {}
 }
  

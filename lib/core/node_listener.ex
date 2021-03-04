@@ -1,4 +1,4 @@
-defmodule Astreu.NodeListener do
+defmodule Astreu.Core.NodeListener do
   use GenServer
   require Logger
 

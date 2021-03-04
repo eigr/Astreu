@@ -1,7 +1,7 @@
-defmodule Astreu.Consumer.Service do
+defmodule Astreu.Core.Protocol.Consumer.Service do
   use GRPC.Server, service: Astreu.Consumer.Subscriber.Service
   require Logger
-  alias Astreu.ProtocolBehaviour, as: Protocol
+  alias Astreu.Core.Protocol.ProtocolBehaviour, as: Protocol
 
   @spec unsubscribe(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
           Google.Protobuf.Empty.t()

@@ -1,4 +1,4 @@
-defmodule Astreu.Producer.PubSubAdapter do
+defmodule Astreu.PubSub.Adapter do
   @doc """
   Defines Publish/Subscriber behaviours
   """

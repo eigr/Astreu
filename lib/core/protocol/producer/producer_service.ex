@@ -1,8 +1,8 @@
-defmodule Astreu.Producer.Service do
+defmodule Astreu.Core.Protocol.Producer.Service do
   use GRPC.Server, service: Astreu.Producer.Publisher.Service
   require Logger
   alias GRPC.Server
-  alias Astreu.ProtocolBehaviour, as: Protocol
+  alias Astreu.Core.Protocol.ProtocolBehaviour, as: Protocol
 
   @spec publish(Astreu.Protocol.Message.t(), GRPC.Server.Stream.t()) ::
           Astreu.Protocol.Message.t()
