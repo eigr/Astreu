@@ -10,6 +10,6 @@ Publisher -> Astreu: { msg: {system: {connect:{id, topic}}} }
 Astreu -> Astreu: Lookup Publisher
 
 Publisher -> Astreu: { msg: {exchange: {...}}}
-Astreu -> Publisher: Send Client Acks: { msg: {ack: {...}}}
+Astreu -> Publisher: Forward Client Acks: { msg: {ack: {...}}}
 
 @enduml
