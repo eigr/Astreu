@@ -1,0 +1,15 @@
+@startuml
+
+skinparam monochrome true
+skinparam responseMessageBelowArrow true
+
+participant Astreu order 20
+participant Publisher order 30
+
+Publisher -> Astreu: { msg: {system: {connect:{id, topic}}} }
+Astreu -> Astreu: Lookup Publisher
+
+Publisher -> Astreu: { msg: {exchange: {...}}}
+Astreu -> Publisher: Send Client Acks: { msg: {ack: {...}}}
+
+@enduml

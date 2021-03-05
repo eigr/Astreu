@@ -1,0 +1,14 @@
+@startuml
+
+skinparam monochrome true
+skinparam responseMessageBelowArrow true
+
+Subscriber -> Astreu: { msg: {system: {connect:{id, topic, subscription}}} }
+Astreu -> Astreu: Lookup subscriber
+
+Astreu -> Subscriber: { msg: {exchange: {...}} } or { msg: {system: {failure: {...}}} }
+
+Subscriber -> Subscriber: handle messages or failures
+Subscriber -> Astreu: { msg: {ack: {...}}} or { msg: {exchange: {...}}} or { msg: {system: {disconnect: {...}}}}
+
+@enduml
