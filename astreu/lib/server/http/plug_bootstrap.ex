@@ -21,5 +21,5 @@ defmodule Astreu.Server.HTTP.PlugBootstrap do
     )
   end
 
-  def drainer(), do: {Plug.Cowboy.Drainer, refs: [Astreu.Server.Http.Endpoint]}
+  def drainer, do: {Plug.Cowboy.Drainer, refs: [Astreu.Server.Http.Endpoint]}
 end

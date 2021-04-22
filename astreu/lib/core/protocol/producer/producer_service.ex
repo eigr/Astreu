@@ -17,9 +17,10 @@ defmodule Astreu.Core.Protocol.Producer.Service do
   defp handle_message(stream, message) do
     params = %{stream: stream, message: message, consumer: false, producer: true}
 
-    with {:ok, msg} <- Protocol.ensure_metadata(params) do
-      Protocol.handle(params)
-    else
+    case Protocol.ensure_metadata(params) do
+      {:ok, _message} ->
+        Protocol.handle(params)
+
       {:error, reason} ->
         Protocol.handle_invalid(reason, params)
     end
