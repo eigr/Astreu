@@ -2,7 +2,7 @@ defmodule Astreu.Core.Protocol.Producer.Dispatcher do
   use GenServer
   require Logger
 
-  @pubsub Application.get_env(:astreu, :producer_adapter)
+  @pubsub Application.compile_env(:astreu, :producer_adapter)
 
   @impl true
   def init(state) do

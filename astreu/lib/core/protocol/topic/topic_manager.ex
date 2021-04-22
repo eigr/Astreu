@@ -10,7 +10,7 @@ defmodule Astreu.Core.Protocol.Topic.TopicManager do
     {:ok, state}
   end
 
-  def child_spec() do
+  def child_spec do
     %{
       id: Astreu.Core.Protocol.Topic.TopicManager,
       start: {Astreu.Core.Protocol.Topic.TopicManager, :start_link, []}
