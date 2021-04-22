@@ -1,6 +1,6 @@
-# AstreuK8s
+# Astreu Kubernetes
 
-**TODO: Add description**
+Astreu Kubernetes Operator
 
 ## Installation
 
