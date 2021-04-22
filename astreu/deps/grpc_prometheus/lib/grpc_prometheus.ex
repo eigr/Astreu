@@ -1,2 +1,0 @@
-defmodule GRPCPrometheus do
-end
