@@ -1,0 +1,11 @@
+{application,rebar3_archive_plugin,
+             [{description,"Rebar3 Code Archive plugin"},
+              {vsn,"0.0.2"},
+              {registered,[]},
+              {applications,[kernel,stdlib]},
+              {env,[]},
+              {modules,[rebar3_archive_plugin]},
+              {maintainers,["Ilya Khaprov"]},
+              {licenses,["MIT"]},
+              {links,[{"Github",
+                       "https://github.com/deadtrickster/rebar3_ez_plugin"}]}]}.

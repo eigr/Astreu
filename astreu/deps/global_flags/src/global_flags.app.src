@@ -1,0 +1,9 @@
+{application,global_flags,
+             [{description,"Write once global flags for Erlang and Elixir"},
+              {vsn,"1.0.0"},
+              {modules,[]},
+              {registered,[]},
+              {applications,[kernel,stdlib]},
+              {maintainers,["Isaac Whitfield"]},
+              {licenses,["MIT"]},
+              {links,[{"Github","https://github.com/whitfin/global-flags"}]}]}.

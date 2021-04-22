@@ -1,0 +1,10 @@
+{application,merkle_map,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"merkle_map"},
+              {modules,['Elixir.Collectable.MerkleMap',
+                        'Elixir.Enumerable.MerkleMap','Elixir.MerkleMap',
+                        'Elixir.MerkleMap.MerkleTree',
+                        'Elixir.MerkleMap.MerkleTree.Diff',
+                        'Elixir.MerkleMap.MerkleTreeImpl']},
+              {registered,[]},
+              {vsn,"0.2.1"}]}.

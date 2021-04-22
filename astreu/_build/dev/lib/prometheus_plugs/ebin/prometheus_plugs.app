@@ -1,0 +1,12 @@
+{application,prometheus_plugs,
+             [{applications,[kernel,stdlib,elixir,logger,prometheus_ex,
+                             accept]},
+              {description,"Prometheus monitoring system client Plugs. Http metrics collector and exporter.\n"},
+              {modules,['Elixir.Prometheus.PlugExporter',
+                        'Elixir.Prometheus.PlugExporter.Config',
+                        'Elixir.Prometheus.PlugInstrumenter',
+                        'Elixir.Prometheus.PlugInstrumenter.Config',
+                        'Elixir.Prometheus.PlugPipelineInstrumenter',
+                        'Elixir.Prometheus.PlugPipelineInstrumenter.Config']},
+              {registered,[]},
+              {vsn,"1.1.5"}]}.
