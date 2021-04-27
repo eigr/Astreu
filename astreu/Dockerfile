@@ -29,7 +29,7 @@ RUN mix release
 
 # ---- Application Stage ----
 FROM alpine:3
-RUN apk add --no-cache --update bash openssl
+RUN apk add --no-cache --update openssl
 
 WORKDIR /home/app
 COPY --from=builder /app/_build .
